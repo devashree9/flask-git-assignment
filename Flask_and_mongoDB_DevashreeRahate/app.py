@@ -8,12 +8,13 @@ app = Flask(__name__)
 # MongoDB Atlas Connection
 
 
-MONGO_URI = "mongodb+srv://rahatedevashree_db_user:yecze3gSy7wEcu1V@cluster0.syhjwb.mongodb.net/?appName=Cluster0"
-
+MONGO_URI = "mongodb+srv://FLASK:DEVASHREE@cluster0.xaoxhff.mongodb.net/"
 client = MongoClient(MONGO_URI)
 
 db = client["signup_database"]
 users_collection = db["users"]
+todo_collection = db["todoitems"]
+
 
 # Home Page
 
@@ -100,6 +101,27 @@ def submit():
             day_of_week=datetime.now().strftime("%A"),
             current_time=datetime.now().strftime("%H:%M:%S")
         )
+
+@app.route('/submittodoitem', methods=['POST'])
+def submit_todo_item():
+    data = request.get_json()
+
+    item_name = data.get('itemName')
+    item_description = data.get('itemDescription')
+
+    todo_collection.insert_one({
+        "itemName": item_name,
+        "itemDescription": item_description
+    })
+
+    return jsonify({
+        "message": "To-Do item submitted successfully"
+    }), 201
+    
+# todo 
+@app.route('/todo')
+def todo():
+    return render_template('todo.html')
 
 # Run Flask Application
 
