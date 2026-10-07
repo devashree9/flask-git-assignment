@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+</head>
+<body>
+
+<h1>To-Do List</h1>
+
+<form id="todoForm">
+
+    <label>Item Name:</label>
+    <input type="text" id="itemName" required>
+
+    <br><br>
+
+    <label>Item Description:</label>
+    <textarea id="itemDescription" required></textarea>
+
+    <br><br>
+
+    <button type="submit">Submit</button>
+
+</form>
+
+<script>
+document.getElementById("todoForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const itemName = document.getElementById("itemName").value;
+    const itemDescription = document.getElementById("itemDescription").value;
+
+    const response = await fetch("/submittodoitem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            itemName: itemName,
+            itemDescription: itemDescription
+        })
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
+});
+</script>
+
+</body>
+</html>
