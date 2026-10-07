@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Signup Page</title>
+</head>
+
+<body>
+
+    <p>Hi everyone, this is the rendered template</p>
+
+    <p>Today is {{ day_of_week }}</p>
+
+    <p>Current time is {{ current_time }}</p>
+
+
+    <!-- Display error message -->
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+
+    <div class="centered">
+
+        <form action="/submit" method="POST">
+
+            <label for="name">Name</label>
+
+            <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter your name"
+            >
+
+            <br><br>
+
+
+            <label for="email">Email</label>
+
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter your email"
+            >
+
+            <br><br>
+
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+            >
+
+            <br><br>
+
+
+            <label for="confirm_password">Confirm Password</label>
+
+            <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+                placeholder="Confirm your password"
+            >
+
+            <br><br>
+
+
+            <input type="submit" value="Submit">
+
+        </form>
+
+    </div>
+
+</body>
+
+
+<style>
+
+    body {
+        background-color: purple;
+    }
+
+    p {
+        color: white;
+        font-size: 30px;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .centered {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 250px;
+        border: 2px solid white;
+    }
+
+    .error {
+        color: red;
+        background-color: white;
+        padding: 10px;
+        font-size: 20px;
+    }
+
+</style>
+
+</html>
