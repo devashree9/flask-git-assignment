@@ -13,6 +13,8 @@ client = MongoClient(MONGO_URI)
 
 db = client["signup_database"]
 users_collection = db["users"]
+todo_collection = db["todoitems"]
+
 
 
 # Home Page
@@ -100,6 +102,27 @@ def submit():
             day_of_week=datetime.now().strftime("%A"),
             current_time=datetime.now().strftime("%H:%M:%S")
         )
+# todo 
+@app.route('/todo')
+def todo():
+    return render_template('todo.html')
+
+@app.route('/submittodoitem', methods=['POST'])
+def submit_todo_item():
+    data = request.get_json()
+
+    item_name = data.get('itemName')
+    item_description = data.get('itemDescription')
+
+    todo_collection.insert_one({
+        "itemName": item_name,
+        "itemDescription": item_description
+    })
+
+    return jsonify({
+        "message": "To-Do item submitted successfully"
+    }), 201
+    
 # todo 
 @app.route('/todo')
 def todo():

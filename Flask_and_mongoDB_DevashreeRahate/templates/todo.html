@@ -1,33 +1,22 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do Page</title>
+    <title>To-Do List</title>
 </head>
-
 <body>
-
     <h1>To-Do List</h1>
 
-    <form method="POST" action="/submittodoitem">
-
+    <form id="todoForm">
         <label for="itemName">Item Name:</label>
-        <input
-            type="text"
-            id="itemName"
-            name="itemName"
-            required
-        >
+        <input type="text" id="itemName" required>
 
         <br><br>
 
         <label for="itemDescription">Item Description:</label>
-        <textarea
-            id="itemDescription"
-            name="itemDescription"
-            required
-        ></textarea>
+        <textarea id="itemDescription" required></textarea>
 
         <br><br>
 
@@ -36,7 +25,41 @@
        <input type="text" id="itemId" name="itemId" required>
       <br><br>
 
+       <label for="itemUUID">Item UUID:</label>
+       <input type="text" id="itemUUID" name="itemUUID" required>
+       <br><br>
+
+       <label for="itemHash">Item Hash:</label>
+<input type="text" id="itemHash" name="itemHash" required>
+<br><br>
     </form>
 
+    <script>
+        document.getElementById("todoForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const itemName = document.getElementById("itemName").value;
+            const itemDescription = document.getElementById("itemDescription").value;
+
+            try {
+                const response = await fetch("/submittodoitem", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        itemName: itemName,
+                        itemDescription: itemDescription
+                    })
+                });
+
+                const result = await response.json();
+                alert(result.message || result.error || "Request completed");
+            } catch (error) {
+                alert("Request failed. Check the Flask terminal.");
+            }
+        });
+    </script>
 </body>
 </html>
+```
